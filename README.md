@@ -19,10 +19,21 @@ The ultimate goal of writing this:
 ### Content List
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Benchmarks](#benchmarks)
+- [Configration](#configration)
 - [Router](#router)
-- [gnet.Context](https://github.com/slclub/gnet)
-	- Request
-	- Response
+- [Context](#context)
+	- [Request](#request)
+		- [Request Paramters](#request-paramters)
+	- [Response](#response)
+	- [Contexter Api](#contexter-api)
+		- [Contexter Setter Getter](#contexter-setter-getter)
+		- [Contexter Get Set Request](#contexter-get-set-request)
+		- [Contexter Get Set Response](#contexter-get-set-response)
+		- [Contexter Abort](#contexter-abort) process flow control.
+- [MidderWare](#middlerware)
+- [Static](#static)
+- [Custom](#custom)
 
 ### Installation
 
@@ -50,7 +61,408 @@ require (
 
 ### Quick start
 
+```go
+package main                                                                                                                                                                                                                    
+
+import (
+    "github.com/slclub/boy"
+    "github.com/slclub/gnet"
+)
+
+func main() {
+	boy.R.GET("/example/ping", func(this gnet.Contexter) {
+        this.Response().WriteString("Hello World!")
+    }) 
+    boy.Run()
+}
+
+```
+
+### Benchmarks
+
+```go
+BenchmarkServer-4		 1000000	      1012 ns/op	     528 B/op	       7 allocs/op
+PASS
+ok		github.com/slclub/gcore	1.029s
+```
+
+### Configration
+
+Install from [boy.Install()](https://github.com/slclub/boy)
+
+[Config file template](https://github.com/slclub/boy/tree/master/etc_temp)
+
+If there is no config file. It will automaticlly generate one.
+
+You don't have to worry about it.
+
+### Router
+
+Import from [grouter](https://github.com/slclub/grouter)
+
+- Restfull router added.
+```go
+	boy.R.
+
+	GET(url string, ctx gnet.HandleFunc)
+	POST(url string, ctx gnet.HandleFunc)
+	PUT(url string, ctx gnet.HandleFunc)
+	DELETE(url string, ctx gnet.HandleFunc)
+	PATCH(url string, ctx gnet.HandleFunc)
+	HEAD(url string, ctx gnet.HandleFunc)
+	OPTIONS(url string, ctx gnet.HandleFunc)
+	// can accept any http.Method request.
+	ANY(url string, ctx gnet.HandleFunc)
+```
+
+-  Use Group
+
+```go
+	// 
+	boy.R.Group(func(group grouter.IGroup){
+		// add this group routes a middlerware.
+		group.Use(func(ctx gnet.Contexter) {})
+		// Deny a middlerware for these routes.
+		group.Deny(gnet.HandleFunc)
+		boy.R.GET(url string, ctx gnet.HandleFunc)
+		boy.R.POST(url string, ctx gnet.HandleFunc)
+		...
+	})
+```
+
+- Use Defined code handle, 404, 405,500;
+
+```go
+	boy.R.BindCodeHandle(404, gnet.HandleFunc)
+	boy.R.BindCodeHandle(405, gnet.HandleFunc)
+	...
+```
+
+- [group.Router interface](https://github.com/slclub/grouter/blob/master/irouter.go)
+
+### Context
+
+[gnet.Contexter](https://github.com/slclub/gnet)
+
+#### Request
+	
+Request object. Obtain all kinds of requested information and parameter routes in the object here
+
+[Source Code](https://github.com/slclub/gnet/blob/master/request.go), You can read it from this link.
+
+
+##### Request Paramters
+
+You can use these methods get paramters from path param, query, form, and so on.
+
+You don't care about  where the paramters come from.
+
+```go
+type RequestParameter interface {
+	// Get param inetface ----------------------------------------------------------
+	// just get string by key string.
+	// q=a
+	// return a
+	GetString(key string, args ...string) (value string, ret bool)
+	// q[]=a&q[]=b
+	// return []string{a, b}
+	GetArray(key string, args ...[]string) ([]string, bool)
+	// q[a]=a&q[b]=b
+	// return map[string]string{"a":"a", "b":"b"}
+	GetMapString(key string, args ...map[string]string) (map[string]string, bool)
+	GetInt64(key string, args ...int64) (int64, bool)
+	GetInt(key string, args ...int) (int, bool)
+
+	// set
+	SetParam(key, value string)
+
+	// input :// data
+	BodyByte() ([]byte, error)
+}
+```
+
+```go
+	// example
+	boy.R.GET(url, func(ctx gnet.Contexter){
+		s1, ok := ctx.Request().GetString(key, default_value string)
+	})
+```
+
+##### Request Interface
+
+```go
+type IRequest interface {
+	GetHttpRequest() *http.Request
+	RequestParameter
+
+	// init and reset
+	InitWithHttp(*http.Request)
+	Reset()
+
+	// header
+	GetHeader(key string) string
+	ContentType(args ...bool) string
+	GetRemoteAddr() string
+	//file
+	FormFile(key string) (*multipart.FileHeader, error)
+}
+```
+
+```go
+	// example
+	boy.R.GET(url, func(ctx gnet.Contexter){
+		s1 := ctx.Request().ContentType()
+	})
+```
+
+
+#### Response
+
+Rewrite the interface of http.ResponseWriter. 
+
+```go
+type IResponse interface {
+	http.ResponseWriter
+	http.Hijacker
+	http.Flusher
+	http.CloseNotifier
+
+	// Returns the HTTP response status code of the current request.
+	Status() int
+
+	// Returns the number of bytes already written into the response http body.
+	// See Written()
+	Size() int
+
+	// Writes the string into the response body.
+	WriteString(string) (int, error)
+
+	// Returns true if the response body was already written.
+	Written() bool
+
+	// Forces to write the http header (status code + headers).
+	FlushHeader()
+
+	// get the http.Pusher for server push
+	Pusher() http.Pusher
+
+	// init reset
+	Reset()
+	InitSelf(http.ResponseWriter)
+
+	// update ResponseWriter.Header()
+	Headers(key, value string)
+}
+
+```
+
+```go
+	// example
+	boy.R.GET(url, func(ctx gnet.Contexter){
+		ctx.Response().Write([]bytes{"hello girls"})
+		ctx.Response().WriteString("hello girls")
+	})
+
+```
+
+#### Contexter Api
+
+[Source Code](https://github.com/slclub/gnet/blob/master/context.go)
+
+These methods been used in the same way.
+
+```go
+    // example
+    boy.R.GET(url, func(ctx gnet.Contexter){
+        ctx.Xxx(args ...)
+    })
+
+```
+
+
+```go
+	Reset()
+	// gerror.StackError([]error) support:
+	// Push(err error)
+	// Pop() error
+	// Size() int
+	GetStackError() gerror.StackError
+	SetSameSite(st http.SameSite)
+
+	ClientIP() string
+	//
+	GetHandler() HandleFunc
+	SetHandler(HandleFunc)
+
+	GetExecute() Executer
+	SetExecute(exe Executer)
+
+	//redirect
+	Redirect(location string, args ...int)
+```
+
+##### Contexter Setter Getter
+
+For custome key-value pairs extension.
+
+```go
+type SetterGetter interface {
+	// setter
+	Set(key string, val interface{})
+	// getter
+	Get(key string) (interface{}, bool)
+	GetString(key string) string
+	GetInt(key string) int
+	GetInt64(key string) int64
+}
+```
+
+##### Contexter Get Set Request 
+
+```go
+// request from other place.
+type IContextRequest interface {
+	Request() IRequest
+	SetRequest(IRequest) bool
+
+	// cookie
+	SetCookie(name, value string, args ...interface{})
+	Cookie(string) (string, error)
+}
+```
+
+##### Contexter Get Set Response
+
+```go
+// response to client or other server.
+type IContextResponse interface {
+	Response() IResponse
+	SetResponse(IResponse) bool
+}
+```
+
+##### Contexter Abort
+
+Execution process jump control.
+
+```go
+// interrupt interface.
+type Aborter interface {
+	// abort current handle .
+	Abort()
+	AbortStatus(int)
+	// Jump out of the whole execution process.
+	// break whole work flow.
+	Exit()
+}
+```
+
+### MiddlerWare
+
+[Source Code](https://github.com/slclub/gcore/blob/master/execute/middleware.go). You can use or deny any flow node or url handle middlerware.
+
+No matter where the middleware is used.
+
+- interface
+
+```go
+type Middler interface {
+	// public excuter interface.
+	flow.IExecuteNode
+	// middle ware interface
+	Use(gnet.HandleFunc)
+	Deny(gnet.HandleFunc)
+
+	GetHandle(i int) (gnet.HandleFunc, string)
+	Combine(Middler)
+	Size() int
+}
+```
+- Use Deny
+```go
+	example:
+	mf1 := func(ctx gnet.Contexter){}
+	mf2 := func(ctx gnet.Contexter){}
+	mf3 := func(ctx gnet.Contexter){}
+
+	// public before node use or deny middlerware.
+	boy.MiddlerBefore.Use(mf1)
+	boy.MiddlerBefore.Use(mf2)
+
+	// The url1 handle will only execute the first gnet.HandleFunc. 
+	// flow: mf1(ctx), handle
+	boy.R.Deny(mf2)
+	boy.R.GET(url1, func(ctx gnet.Contexter){})
+
+	// The url2 will execute boths handles.
+	// flow:  mf1(ctx), mf2(ctx), mf3(ctx) handle
+	boy.R.Use(mf3)
+	boy.R.GET(url2, func...)
+
+	// after node use or deny middlerware.
+	boy.MiddlerAfter.Use ...
+
+```
+
+- Group Router Use Deny
+
+Router Group use or deny middlerware.
+
+```go
+	example:
+    mf1 := func(ctx gnet.Contexter){}
+    mf2 := func(ctx gnet.Contexter){}
+	mf3 := func(ctx gnet.Contexter){}
+
+	boy.MiddlerBefore.Use(f1)
+	boy.MiddlerBefore.Use(f2)
+
+	// These routes of group have to same flow way.
+	// flow: mf1(ctx), mf3(ctx) , handle, mf5(ctx)
+	boy.R.Group(func(group grouter.IGroup){
+		group.Deny(mf2)
+		group.Use(mf3)
+		group.Deny(mf4)
+		boy.R.GET(url1, gnet.HandleFunc)
+		boy.R.GET(url2, gnet.HandleFunc)
+		boy.R.GET(url3, gnet.HandleFunc)
+	})
+
+    mf4 := func(ctx gnet.Contexter){}
+	mf5 := func(ctx gnet.Contexter){}
+
+	boy.MiddlerAfter.Use(f4)
+	boy.MiddlerAfter.Use(f5)
+
+
+```
+
+### Static
+
+Static service listening
+
+You just need to change the file of etc/go.ini
+
+```ini
+# static service setting.
+[static_service]
+# Static root path.
+# Default value is empty
+# If you set the value of this field. It should be an absoluted path.
+root=
+
+# example: 
+# Listening to multiple static folders needs to be separated by backspaces
+service=sa  sb  
+# param     @1  aliase of static path that is used to url.
+#           @2  actual floder path.
+#           @3  folder listing. true,on,yes,false; Where can browse directories.
+sa=source  source      true
+sb=static  assets     true
+```
+
 ### Custome
+
 
 - Rewrite router
 
