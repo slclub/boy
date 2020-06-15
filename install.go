@@ -5,6 +5,7 @@ import (
 	"github.com/slclub/utils"
 	"os"
 	"path"
+	"runtime"
 )
 
 var (
@@ -31,7 +32,8 @@ func InstallDir(path_dir string) {
 
 func CreateFileAuto(path_dir, file_name string, force bool) bool {
 	// temp config file.
-	file := path.Join("", conf_dir_temp)
+	// link.DEBUG_PRINT("[BOY][INSTALL]", current_file())
+	file := path.Join(path.Dir(current_file()), conf_dir_temp)
 	file = path.Join(file, file_name)
 	old_content, ok := utils.ReadAllByte(file)
 	if !ok {
@@ -62,4 +64,12 @@ func Install() {
 	path_dir := path.Join(link.APP_PATH, conf_dir)
 	InstallDir(path_dir)
 	CreateFileAuto(conf_dir, conf_file, false)
+}
+
+func current_file() string {
+	_, file, _, ok := runtime.Caller(1)
+	if !ok {
+		return ""
+	}
+	return file
 }
