@@ -1,5 +1,8 @@
 # boy
 
+
+[English](https://github.com/slclub/boy/blob/master/README.md) [中文](https://github.com/slclub/boy/blob/master/README.ch.md)
+
 ### summary
 
 A light go web framework. Most of the functional components are implemented by interfaces.
