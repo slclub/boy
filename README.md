@@ -461,9 +461,51 @@ sa=source  source      true
 sb=static  assets     true
 ```
 
-### Custome
+### Custom
 
 
 - Rewrite router
 
  Example : Just implement the [github.com/slclub/gouter.Router](https://github.com/slclub/grouter), if you want to rewrite router.
+
+```go
+// examples:
+
+func NewRouter() grouter.Router {
+
+    r := &router{}
+    r.initself(grouter.NewRouter())
+    //r.SetStore(grouter.NewStore())
+    //r.SetDecoder(grouter.NewPath())
+    //r.code_handles = make(map[int]gnet.HandleFunc)
+    //bind code handle
+    r.BindCodeHandle(http.StatusNotFound, func(ctx gnet.Contexter) {
+        ctx.Response().WriteHeader(404)
+        ctx.Response().WriteString("grouter 404 not found")
+    })  
+    r.NotFoundHandler = func(w http.ResponseWriter, r *http.Request) {
+        w.WriteHeader(404)
+        w.Write([]byte("grouter 404 not found"))
+    }   
+    //http.StatusMethodNotAllowed
+    //r.BindCodeHandle(http.StatusMethodNotAllowed, grouter.http_405_handle)
+    //r.BindCodeHandle(http.StatusInternalServerError, grouter.http_500_handle)
+    return r
+}
+
+type router struct {
+    grouter.Router
+    NotFoundHandler func(http.ResponseWriter, *http.Request)
+}
+
+func (r *router) initself(rr grouter.Router) {
+    r.Router = rr
+}
+
+
+
+router := NewRouter()
+router.SetKey("router")
+boy.App.DriverRegister(router)
+
+```
