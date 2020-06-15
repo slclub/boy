@@ -31,6 +31,7 @@ The ultimate goal of writing this:
 		- [Contexter Get Set Request](#contexter-get-set-request)
 		- [Contexter Get Set Response](#contexter-get-set-response)
 		- [Contexter Abort](#contexter-abort) process flow control.
+	- [Save File](#save-file)
 - [MidderWare](#middlerware)
 - [Static](#static)
 - [Custom](#custom)
@@ -354,6 +355,17 @@ type Aborter interface {
 	// Jump out of the whole execution process.
 	// break whole work flow.
 	Exit()
+}
+```
+
+#### Save File
+
+Upload file.
+
+```go
+f1 = func(ctx gnet.Contexter) {
+    f, err := ctx.Request().FormFile("file")
+    gnet.SaveUploadFile(f, "/tmp/glog/test")
 }
 ```
 
