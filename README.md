@@ -34,6 +34,9 @@ The ultimate goal of writing this:
 	- [Save File](#save-file)
 - [MidderWare](#middlerware)
 - [Static](#static)
+- [gcore](https://github.com/slclub/gcore)
+- [utils](https://github.com/slclub/utils)
+- [link](https://github.com/slclub/link)
 - [Custom](#custom)
 
 ### Installation
