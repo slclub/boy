@@ -27,6 +27,7 @@ var (
 )
 
 func init() {
+	Install()
 	Initialize()
 }
 
