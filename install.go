@@ -31,7 +31,7 @@ func InstallDir(path_dir string) {
 
 func CreateFileAuto(path_dir, file_name string, force bool) bool {
 	// temp config file.
-	file := path.Join(link.APP_PATH, conf_dir_temp)
+	file := path.Join("", conf_dir_temp)
 	file = path.Join(file, file_name)
 	old_content, ok := utils.ReadAllByte(file)
 	if !ok {
