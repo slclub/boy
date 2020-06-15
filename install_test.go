@@ -32,3 +32,11 @@ func TestInstallForce(t *testing.T) {
 	ret = CreateFileAuto(conf_dir, "noconf.ini", false)
 	assert.False(t, ret)
 }
+
+func TestInstallError(t *testing.T) {
+	ret := CreateDir("/root/boy")
+	assert.False(t, ret)
+
+	// Install Dir
+	InstallDir("/root/boy")
+}
