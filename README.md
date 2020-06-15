@@ -82,7 +82,9 @@ func main() {
 
 ```
 
-### Benchmarks
+### [Benchmarks](https://github.com/slclub/gcore)
+
+This benchmark results come from gcore bench testing.
 
 ```go
 BenchmarkServer-4		 1000000	      1012 ns/op	     528 B/op	       7 allocs/op
