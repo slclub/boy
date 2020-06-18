@@ -69,7 +69,7 @@ require (
 ### Quick start
 
 ```go
-package main                                                                                                                                                                                                                    
+package main 
 
 import (
     "github.com/slclub/boy"
@@ -77,7 +77,7 @@ import (
 )
 
 func main() {
-	boy.R.GET("/example/ping", func(this gnet.Contexter) {
+     boy.R.GET("/example/ping", func(this gnet.Contexter) {
         this.Response().WriteString("Hello World!")
     }) 
     boy.Run()
@@ -337,6 +337,10 @@ type IContextRequest interface {
 	// cookie
 	SetCookie(name, value string, args ...interface{})
 	Cookie(string) (string, error)
+	
+	// echo data to response writer.
+	Data(map[string]interface{})gnet.Contexter
+	Echo(args...string)
 }
 ```
 
