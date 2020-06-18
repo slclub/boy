@@ -37,7 +37,7 @@ The ultimate goal of writing this:
 	- [Save File](#save-file)
 - [MidderWare](#middlerware)
 	- [Tutorials](#tutorials)
-	- [ThirdMiddler](#third-middler)
+	- [ThirdMiddlewares](#third-middlewares)
 - [Static](#static)
 - [gcore](https://github.com/slclub/gcore)
 - [utils](https://github.com/slclub/utils)
@@ -465,9 +465,9 @@ Router Group use or deny middlerware.
 
 ```
 
-#### ThirdMiddler
+#### Third Middlewares
 
-[BoyMiddler](#https://github.com/slclub/boymiddler)
+[BoyMiddler](https://github.com/slclub/boymiddler)
 
 
 ### Static
