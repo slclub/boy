@@ -2,6 +2,8 @@ package boy
 
 import (
 	"github.com/slclub/gcore"
+	"github.com/slclub/gnet"
+	"github.com/slclub/grouter"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -17,4 +19,5 @@ func TestBoyNew(t *testing.T) {
 }
 
 func TestBoyRouter(t *testing.T) {
+	grouter.Group.Use(func(ctx gnet.Contexter) {})
 }
