@@ -1,6 +1,7 @@
 # boy
 
 [![GoTest](https://api.travis-ci.org/slclub/boy.svg)](https://github.com/slclub/boy/actions)
+[![codecov](https://codecov.io/gh/slclub/boy/branch/master/graph/badge.svg)](https://codecov.io/gh/slclub/boy)
 
 
 [English](https://github.com/slclub/boy/blob/master/README.md) [中文](https://github.com/slclub/boy/blob/master/README.ch.md)
