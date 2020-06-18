@@ -36,8 +36,8 @@ The ultimate goal of writing this:
 		- [Contexter Abort](#contexter-abort) process flow control.
 	- [Save File](#save-file)
 - [MidderWare](#middlerware)
-	-[Tutorials](#tutorials)
-	-[ThirdMiddler](#third-middler)
+	- [Tutorials](#tutorials)
+	- [ThirdMiddler](#third-middler)
 - [Static](#static)
 - [gcore](https://github.com/slclub/gcore)
 - [utils](https://github.com/slclub/utils)
