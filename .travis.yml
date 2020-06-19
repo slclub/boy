@@ -1,10 +1,10 @@
 language: go
 
 before_install:
-  - go get -t -v ./...
+    - go get -t -v ./...
 
 script:
-  - go test  -coverprofile=coverage.txt -covermode=atomic.
+    - go test  -coverprofile=coverage.txt -covermode=atomic.
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) -t 718c06d0-0678-44c1-837d-66aba00c95b4
