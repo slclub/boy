@@ -9,6 +9,9 @@ import (
 )
 
 func TestBoyNew(t *testing.T) {
+	Install()
+	Initialize()
+
 	//Initialize()
 	count := 0
 	Defined.AddRegister(func(en *gcore.Engine) { count++ })
