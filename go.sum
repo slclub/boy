@@ -149,6 +149,10 @@ github.com/slclub/gcore v0.0.0-20200612092023-03b638a3a3d1 h1:YNTG9JDZnaI4N7iApD
 github.com/slclub/gcore v0.0.0-20200612092023-03b638a3a3d1/go.mod h1:KBoJeSdaK4ZKRLLAfrdB3TxPvi7ho/R+jm2k4NGVIQ8=
 github.com/slclub/gcore v0.0.0-20200615175931-8d420905a594 h1:0GcMNHt4qTsEKeqs4kkhJfzRoKmfNqgkzGhNTg4Pkm8=
 github.com/slclub/gcore v0.0.0-20200615175931-8d420905a594/go.mod h1:KBoJeSdaK4ZKRLLAfrdB3TxPvi7ho/R+jm2k4NGVIQ8=
+github.com/slclub/gcore v0.0.1 h1:JStifCaZkeneQbKrHzThAZDUsfnD/8wFlX+pj175pzY=
+github.com/slclub/gcore v0.0.1/go.mod h1:KBoJeSdaK4ZKRLLAfrdB3TxPvi7ho/R+jm2k4NGVIQ8=
+github.com/slclub/gcore v0.0.2 h1:rlxKiy4GP0jV6IE/2b55QBLupCKiBgivCUCIHcPR15E=
+github.com/slclub/gcore v0.0.2/go.mod h1:u/9W0Y7qniP/gtp96ly7HynTjl2bE1qzQwBH40iJwZk=
 github.com/slclub/gerror v0.0.0-20200605170533-056a97d00f25 h1:d/tZOF+7PFsSL1jDDpnw3xnQXfWr61DFboT7nEgcats=
 github.com/slclub/gerror v0.0.0-20200605170533-056a97d00f25/go.mod h1:H4sTdpeFUJMjN6atbfOLBQfdpptVYCfrBNPp90TEPRE=
 github.com/slclub/glog v0.0.7 h1:r/2kjlPox3+rUUERnb0fRBioi2okq0llkEbsjBdcR8M=
@@ -159,6 +163,8 @@ github.com/slclub/gnet v0.0.0-20200610034653-44e24fe915e4/go.mod h1:Rq2Nutl5pLxK
 github.com/slclub/gnet v0.0.0-20200611112313-9d4673ce2c97/go.mod h1:Rq2Nutl5pLxK/AkwGIWsVKurz8FcNbbC15ITH+oHiSA=
 github.com/slclub/gnet v0.0.0-20200612090459-f1df588869fe h1:z4QIn6vewftkOK5gYOA8582f1JJG1cH9aE2aQgeEqzU=
 github.com/slclub/gnet v0.0.0-20200612090459-f1df588869fe/go.mod h1:Rq2Nutl5pLxK/AkwGIWsVKurz8FcNbbC15ITH+oHiSA=
+github.com/slclub/gnet v0.0.4 h1:PTwA72Fai40SzqSDtWnVA5phg8pnySi8mFEsRK+OTDs=
+github.com/slclub/gnet v0.0.4/go.mod h1:W1niGSW98xe7avDBlHEcLtiBt/zvScMt40SmZNGs2Ts=
 github.com/slclub/goqueue v0.0.4 h1:2lyYr243RLUYdrcv7KCHmRwfQVjXHt86O61hav/co7A=
 github.com/slclub/goqueue v0.0.4/go.mod h1:5Pm6g6fWEMUZTQvZqUHyKygdV4VEqHO3joxCoDYFj5Q=
 github.com/slclub/grouter v0.0.0-20200608154541-6a3fcf1718e0/go.mod h1:biIOH/sx78aJxd6Oc9Ho/svruy2IW/GBFR7FugHvLIA=
@@ -167,6 +173,8 @@ github.com/slclub/grouter v0.0.0-20200611205916-0aa307a67ba4 h1:1fr2nVPfAMCQxlXj
 github.com/slclub/grouter v0.0.0-20200611205916-0aa307a67ba4/go.mod h1:KtXkxYMujcB3iNaDkpi/Avu4Zbmz8ceEXvgMrOM28o4=
 github.com/slclub/grouter v0.0.0-20200615072843-f0615a45f696 h1:PRGU5T5yhuSQ1GOi5EJY94KpqEDa/pr8ZUkNCkiiwo4=
 github.com/slclub/grouter v0.0.0-20200615072843-f0615a45f696/go.mod h1:+HP0PxcSK2GyRApq5VhVgCUy0IlAh71I1v75dRLcHCs=
+github.com/slclub/grouter v0.0.1 h1:RJ8PZ/LwGoFM4yKOL2Mizrgtf+RkhReMxKOHt767tJY=
+github.com/slclub/grouter v0.0.1/go.mod h1:/Xslc572YEnFQQCrsbJpEEF1mUiUos6StGhqpZvzEqQ=
 github.com/slclub/link v0.0.0-20200605085902-9e7733b41a86/go.mod h1:sgajmBtcnGK5EOEFFj+e10XReEc4G8O/mLHt2i+HMm0=
 github.com/slclub/link v0.0.0-20200611133650-539b373ec165 h1:gcdG1cYAi0JGnRVeV9VtX6Yct+qrIBug2XhG++Gdldc=
 github.com/slclub/link v0.0.0-20200611133650-539b373ec165/go.mod h1:sgajmBtcnGK5EOEFFj+e10XReEc4G8O/mLHt2i+HMm0=
